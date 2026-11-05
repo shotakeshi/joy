@@ -123,6 +123,7 @@ class ServicePageController extends Controller
      */
     public function edit(ServicePage $servicePage): View|RedirectResponse
     {
+//        dd($servicePage->content()->more);
         $widgets = Widget::active()->get();
         // Returns 'en' if present, null if not
         $refLang = request('ref_lang') ?? config('app.locale');

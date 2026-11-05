@@ -355,6 +355,9 @@ return [
         'more_content' => 'Nội dung mục',
         'more' => 'Thông tin thêm',
         'widgets' => 'Widget',
+        'cost' => 'Chi phí chương trình',
+        'program_costs' => 'Chi phí chương trình',
+        'actual_costs' => 'Chi phí thực tế',
     ],
     'menu' => [
         'dashboard' => 'Bảng điều khiển',

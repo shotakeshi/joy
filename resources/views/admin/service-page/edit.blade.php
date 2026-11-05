@@ -94,6 +94,29 @@
     </style>
 @endpush
 @section('content')
+    @php
+        $moreItems = old('more', $servicePageContent->more ?? []);
+
+        $programCosts = $moreItems['program_costs'] ?? 0;
+        $actualCosts = $moreItems['actual_costs'] ?? 0;
+
+        if (is_string($moreItems)) {
+            $moreItems = json_decode($moreItems, true) ?? [];
+        }
+
+        if (!is_array($moreItems)) {
+            $moreItems = [];
+        }
+
+        $moreItems = array_filter(
+            $moreItems,
+            fn ($value, $key) => is_int($key),
+            ARRAY_FILTER_USE_BOTH
+        );
+
+        $moreItems = array_values($moreItems);
+
+    @endphp
     <div class="container-fluid">
         <x-admin::page-title
                 :name="__('site.service-pages.update_title')"
@@ -157,16 +180,6 @@
                         <div class="card-body">
                             <div class="repeater-custom-show-hide repeater">
                                 <div data-repeater-list="more">
-                                    @php
-                                        $moreItems = old('more', $servicePageContent->more ?? []);
-                                        if (is_string($moreItems)) {
-                                            $moreItems = json_decode($moreItems, true) ?? [];
-                                        }
-                                        if (!is_array($moreItems)) {
-                                            $moreItems = [];
-                                        }
-                                        $moreItems = array_values($moreItems);
-                                    @endphp
                                     @forelse($moreItems as $more)
                                         <div data-repeater-item="">
                                             <div class="row">
@@ -175,7 +188,7 @@
                                                             name="more[name][]"
                                                             label="{{ __('site.service-pages.more_name') }}"
                                                             placeholder="{{ __('site.service-pages.more_name') }}"
-                                                            :value="$more['name']"
+                                                            :value="$more['name'] ?? '' "
                                                     />
                                                     <x-admin::forms.textarea
                                                             name="more[content][]"
@@ -183,7 +196,7 @@
                                                             placeholder="{{ __('site.service-pages.more_content') }}"
                                                             rows="5"
                                                             ckeditor
-                                                            :value="$more['content']"
+                                                            :value="$more['content'] ?? '' "
                                                     />
                                                 </div>
                                                 <div class="col-lg-2">
@@ -294,43 +307,27 @@
                     </div>
                     <div class="card">
                         <div class="card-header">
-                            {{ __('site.service-pages.widgets') }}
+                            <strong class="italic">{{ __('site.service-pages.cost') }}</strong>
                         </div>
                         <div class="card-body">
-                            <ul class="list-unsyled m-0 pl-0 transaction-history">
-                                @forelse($widgets as $widget)
-                                    <li class="widget-item align-items-center d-flex justify-content-between">
-                                        <label class="widget-row-label mb-0">
-                                            <div class="media align-items-center">
-                                                <input
-                                                        type="checkbox"
-                                                        name="widgets[]"
-                                                        value="{{ $widget->id }}"
-                                                        class="widget-checkbox"
-                                                        @checked(
-                                                            in_array(
-                                                                (int) $servicePage->id,
-                                                                array_map('intval', data_get($widget->settings, 'service_page_ids', []))
-                                                            )
-                                                        )
-                                                >
-                                                <span class="custom-checkbox"></span>
-
-                                                <div class="media-body align-self-center">
-                                                    <div class="transaction-data">
-                                                        <h3 class="m-0">{{ $widget->name }}</h3>
-                                                        <p class="text-muted mb-0">{{ $widget->slug }}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <span class="widget-type">{{ $widget->type }}</span>
-                                        </label>
-                                    </li>
-                                @empty
-                                    <p>No Widget</p>
-                                @endforelse
-                            </ul>
+                            <div class="row">
+                                <div class="col-12">
+                                    <x-admin::forms.input
+                                            name="more[program_costs]"
+                                            label="{{ __('site.service-pages.program_costs') }}"
+                                            placeholder="{{ __('site.service-pages.program_costs') }}"
+                                            :value="$programCosts"
+                                    />
+                                </div>
+                                <div class="col-12">
+                                    <x-admin::forms.input
+                                            name="more[actual_costs]"
+                                            label="{{ __('site.service-pages.actual_costs') }}"
+                                            placeholder="{{ __('site.service-pages.actual_costs') }}"
+                                            :value="$actualCosts"
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card">

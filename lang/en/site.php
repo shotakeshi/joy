@@ -363,6 +363,9 @@ return [
         'more_content' => 'More Content',
         'more' => 'More',
         'widgets' => 'Widgets',
+        'cost' => 'Cost',
+        'program_costs' => 'Program costs',
+        'actual_costs' => 'Actual costs',
     ],
     'no_data' => 'No data available',
     'menu' => [
