@@ -224,14 +224,14 @@
                             <div class="row">
                                 <div class="col-12">
                                     <x-admin::forms.input
-                                            name="more[program_costs]"
+                                            name="extra[program_costs]"
                                             label="{{ __('site.service-pages.program_costs') }}"
                                             placeholder="{{ __('site.service-pages.program_costs') }}"
                                     />
                                 </div>
                                 <div class="col-12">
                                     <x-admin::forms.input
-                                            name="more[actual_costs]"
+                                            name="extra[actual_costs]"
                                             label="{{ __('site.service-pages.actual_costs') }}"
                                             placeholder="{{ __('site.service-pages.actual_costs') }}"
                                     />

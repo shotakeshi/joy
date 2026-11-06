@@ -23,12 +23,12 @@ class ServicePage extends Model
     public const ACTIVITY_MODULE = ActivityModule::SERVICE_PAGE->value;
 
     protected $fillable = [
-        'status', 'admin_id', 'deleted_at', 'more'
+        'status', 'admin_id', 'deleted_at', 'extra'
     ];
 
     protected $casts = [
         'status' => 'boolean',
-        'more' => 'array'
+        'extra' => 'array'
     ];
 
     // Optionally, specify the name of the 'deleted_at' column

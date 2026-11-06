@@ -96,9 +96,10 @@
 @section('content')
     @php
         $moreItems = old('more', $servicePageContent->more ?? []);
+        $extraItems = old('extra', $servicePage->extra ?? []);
 
-        $programCosts = $moreItems['program_costs'] ?? 0;
-        $actualCosts = $moreItems['actual_costs'] ?? 0;
+        $programCosts = $extraItems['program_costs'] ?? 0;
+        $actualCosts = $extraItems['actual_costs'] ?? 0;
 
         if (is_string($moreItems)) {
             $moreItems = json_decode($moreItems, true) ?? [];
