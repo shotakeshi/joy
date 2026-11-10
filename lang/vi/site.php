@@ -358,6 +358,16 @@ return [
         'cost' => 'Chi phí chương trình',
         'program_costs' => 'Chi phí chương trình',
         'actual_costs' => 'Chi phí thực tế',
+        'project_budget' => 'Chi tiết kinh phí dự án',
+        'album_url' => 'Đường dẫn album ảnh',
+        'config' => 'Cấu hình',
+        'area' => 'Khu vực',
+        'timing' => 'Thời điểm',
+        'activity_year' => 'Năm hoạt động',
+        'main' =>  'Thông tin chính',
+        'short_introduction' => 'Giới thiệu ngắn',
+        'contribution_details' => 'Nội dung đóng góp',
+        'list_of_donors' => 'Danh sách mạnh thường quân'
     ],
     'menu' => [
         'dashboard' => 'Bảng điều khiển',
@@ -368,6 +378,7 @@ return [
         'blog_category' => 'Chuyên mục bài viết',
         'blog_post' => 'Bài viết',
         'widget' => 'Widget',
+        'landing-page' => 'Landing Page',
         'service-page' => 'Trang dịch vụ',
     ],
     'footer' => [

@@ -79,6 +79,7 @@ class ServicePageController extends Controller
      */
     public function store(ServicePageRequest $request): RedirectResponse
     {
+        dd($request->all());
         $uploadedImage = null;
         DB::beginTransaction();
         try {
@@ -89,8 +90,7 @@ class ServicePageController extends Controller
                 self::IMAGE_PATH
             );
             $uploadedImage = $request['image'];
-            $servicePage->contents()->create($request->except(['file', 'remove_image', 'submitter', 'widgets']));
-            $this->updateWidgets($request->input('widgets', []), $servicePage->id);
+            $servicePage->contents()->create($request->except(['file', 'submitter']));
             DB::commit();
             toastr()->success(__('site.notification.create_success'));
             if ($request['submitter'] == self::SAVE_AND_EXIT) {

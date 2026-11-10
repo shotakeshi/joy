@@ -101,171 +101,284 @@
         <form id="page" action="{{ route('service-pages.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
-                <div class="col-lg-8">
-                    <div class="card">
-                        <div class="card-header">
-                            {{ __('site.page.detail') }}
-                        </div>
-                        <div class="card-body">
-                            <x-admin::forms.input
-                                name="name"
-                                label="{{ __('site.page.name') }}"
-                                placeholder="{{ __('site.page.name') }}"
-                                required
-                                onkeyup="generateSlug(this)"
-                            />
-                            <x-admin::forms.input
-                                name="slug"
-                                label="{{ __('site.page.slug') }}"
-                                placeholder="{{ __('site.page.slug') }}"
-                                required
-                            />
-                            <x-admin::forms.textarea
-                                    name="description"
-                                    label="{{ __('site.page.description') }}"
-                                    placeholder="{{ __('site.page.description') }}"
-                                    rows="5"
-                            />
-                            <x-admin::forms.textarea
-                                    name="content"
-                                    label="{{ __('site.page.content') }}"
-                                    placeholder="{{ __('site.page.content') }}"
-                                    rows="5"
-                                    required
-                                    ckeditor
-                            />
+                <div class="col-lg-12">
+                    <div class="alert icon-custom-alert alert-outline-primary alert-primary-shadow" role="alert">
+                        <i class="fas fa-exclamation alert-icon font-18"></i>
+                        <div class="alert-text">
+                            {{ __('site.language_default') . ': ' . $currentLanguage->name }}
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-header">
-                            {{ __('site.service-pages.more') }}
-                        </div>
-                        <div class="card-body">
-                            <div class="repeater-custom-show-hide repeater">
-                                <div data-repeater-list="more">
-                                    <div data-repeater-item="">
-                                        <div class="row">
-                                            <div class="col-lg-10">
-                                                <x-admin::forms.input
-                                                        name="more[name][]"
-                                                        label="{{ __('site.service-pages.more_name') }}"
-                                                        placeholder="{{ __('site.service-pages.more_name') }}"
-                                                />
-                                                <x-admin::forms.textarea
-                                                        name="more[content][]"
-                                                        label="{{ __('site.service-pages.more_content') }}"
-                                                        placeholder="{{ __('site.service-pages.more_content') }}"
-                                                        rows="5"
-                                                        ckeditor
-                                                />
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <span data-repeater-delete="" class="btn btn-gradient-danger w-100">
-                                                    <span class="far fa-trash-alt mr-1"></span> {{ __('site.widget.btn_delete') }}
-                                                </span>
-                                                <button type="button"
-                                                        class="btn btn-gradient-secondary btn-move-up w-100 mt-3"
-                                                        title="{{ __('site.widget.move_up') }}">
-                                                    <i class="fas fa-arrow-up"></i> {{ __('site.widget.up') }}
-                                                </button>
-                                                <button type="button"
-                                                        class="btn btn-gradient-primary btn-move-down w-100 mt-3"
-                                                        title="{{ __('site.widget.move_down') }}">
-                                                    <i class="fas fa-arrow-down"></i> {{ __('site.widget.down') }}
-                                                </button>
+                    <ul class="nav nav-pills nav-justified mb-3" role="tablist">
+                        <li class="nav-item waves-effect waves-light">
+                            <a class="nav-link active" data-toggle="tab" href="#home" role="tab">{{ __('site.service-pages.main') }}</a>
+                        </li>
+                        <li class="nav-item waves-effect waves-light">
+                            <a class="nav-link" data-toggle="tab" href="#profile" role="tab">{{ __('site.service-pages.config') }}</a>
+                        </li>
+                        <li class="nav-item waves-effect waves-light">
+                            <a class="nav-link" data-toggle="tab" href="#settings" role="tab">{{ __('site.service-pages.more') }}</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="home" role="tabpanel">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            {{ __('site.page.detail') }}
+                                        </div>
+                                        <div class="card-body">
+                                            <x-admin::forms.input
+                                                    name="name"
+                                                    label="{{ __('site.page.name') }}"
+                                                    placeholder="{{ __('site.page.name') }}"
+                                                    required
+                                                    onkeyup="generateSlug(this)"
+                                            />
+                                            <x-admin::forms.input
+                                                    name="slug"
+                                                    label="{{ __('site.page.slug') }}"
+                                                    placeholder="{{ __('site.page.slug') }}"
+                                                    required
+                                            />
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <x-admin::forms.textarea
+                                                            name="extra[short_introduction]"
+                                                            label="{{ __('site.service-pages.short_introduction') }}"
+                                                            placeholder="{{ __('site.service-pages.short_introduction') }}"
+                                                            rows="5"
+                                                            ckeditor
+                                                    />
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <x-admin::forms.textarea
+                                                            name="description"
+                                                            label="{{ __('site.page.description') }}"
+                                                            placeholder="{{ __('site.page.description') }}"
+                                                            rows="5"
+                                                            ckeditor
+                                                    />
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <x-admin::forms.textarea
+                                                            name="extra[contribution_details]"
+                                                            label="{{ __('site.service-pages.contribution_details') }}"
+                                                            placeholder="{{ __('site.service-pages.contribution_details') }}"
+                                                            rows="5"
+                                                            ckeditor
+                                                    />
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <x-admin::forms.textarea
+                                                            name="extra[list_of_donors]"
+                                                            label="{{ __('site.service-pages.list_of_donors') }}"
+                                                            placeholder="{{ __('site.service-pages.list_of_donors') }}"
+                                                            rows="5"
+                                                            ckeditor
+                                                    />
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <x-admin::forms.textarea
+                                                            name="content"
+                                                            label="{{ __('site.page.content') }}"
+                                                            placeholder="{{ __('site.page.content') }}"
+                                                            rows="5"
+                                                            required
+                                                            ckeditor
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
-                                        <hr>
                                     </div>
                                 </div>
-                                <div class="form-group row mb-0">
-                                    <div class="col-sm-12 text-right">
-                                        <span data-repeater-create="" class="btn btn-outline-secondary btn-md">
-                                            <span class="fa fa-plus"></span> {{ __('site.widget.add_row') }}
-                                        </span>
-                                    </div><!--end col-->
-                                </div><!--end row-->
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <strong class="italic">{{ __('site.language_default') . ': ' . $currentLanguage->name }}</strong>
-                        </div>
-                        <div class="card-body">
+                        <div class="tab-pane" id="profile" role="tabpanel">
                             <div class="row">
-                                <div class="col-6">
-                                    <x-admin::forms.single_file
-                                            name="file"
-                                            label="{{ __('site.page.avatar') }}"
-                                            accept="image/jpeg,image/png,image/webp"
-                                    />
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <x-admin::forms.single_file
+                                                            name="file"
+                                                            label="{{ __('site.page.avatar') }}"
+                                                            accept="image/jpeg,image/png,image/webp"
+                                                    />
+                                                </div>
+                                                <div class="col-6">
+                                                    <x-admin::forms.input
+                                                            name="extra[area]"
+                                                            label="{{ __('site.service-pages.area') }}"
+                                                            placeholder="{{ __('site.service-pages.area') }}"
+                                                    />
+                                                    <label>{{ __('site.service-pages.timing') }}</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" name="extra[timing]" value="10/24/1984">
+                                                    </div>
+                                                    <label class="mt-3">{{ __('site.service-pages.activity_year') }}</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" name="extra[year]" value="2009">
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <x-admin::forms.radio-enums
+                                                            name="status"
+                                                            label="{{ __('site.admin.status') }}"
+                                                            :options="\App\Enums\DefaultStatus::options()"
+                                                            :selected="\App\Enums\DefaultStatus::ACTIVE->value"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-6">
-                                </div>
-                                <div class="col-12">
-                                    <x-admin::forms.radio-enums
-                                            name="status"
-                                            label="{{ __('site.admin.status') }}"
-                                            :options="\App\Enums\DefaultStatus::options()"
-                                            :selected="\App\Enums\DefaultStatus::ACTIVE->value"
-                                    />
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <strong class="italic">{{ __('site.service-pages.config') }}</strong>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <x-admin::forms.input
+                                                            name="extra[project_budget]"
+                                                            label="{{ __('site.service-pages.project_budget') }}"
+                                                            placeholder="{{ __('site.service-pages.project_budget') }}"
+                                                    />
+                                                </div>
+                                                <div class="col-12">
+                                                    <x-admin::forms.input
+                                                            name="extra[album_url]"
+                                                            label="{{ __('site.service-pages.album_url') }}"
+                                                            placeholder="{{ __('site.service-pages.album_url') }}"
+                                                    />
+                                                </div>
+                                                <div class="col-12">
+                                                    <x-admin::forms.input
+                                                            name="extra[program_costs]"
+                                                            label="{{ __('site.service-pages.program_costs') }}"
+                                                            placeholder="{{ __('site.service-pages.program_costs') }}"
+                                                    />
+                                                </div>
+                                                <div class="col-12">
+                                                    <x-admin::forms.input
+                                                            name="extra[actual_costs]"
+                                                            label="{{ __('site.service-pages.actual_costs') }}"
+                                                            placeholder="{{ __('site.service-pages.actual_costs') }}"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            {{ __('site.page.seo') }} | {{ __('site.page.seo_config') }}
+                                        </div>
+                                        <div class="card-body">
+                                            <x-admin::forms.input
+                                                    name="meta_title"
+                                                    label="{{ __('site.page.meta_title') }}"
+                                                    placeholder="{{ __('site.page.meta_title') }}"
+                                                    maxlength="60"
+                                            />
+                                            <x-admin::forms.textarea
+                                                    name="meta_description"
+                                                    label="{{ __('site.page.meta_description') }}"
+                                                    placeholder="{{ __('site.page.meta_description') }}"
+                                                    rows="5"
+                                                    maxlength="150"
+                                            />
+                                            <x-admin::forms.tagsinput
+                                                    name="meta_keywords"
+                                                    label="{{ __('site.page.meta_keywords') }}"
+                                                    placeholder="{{ __('site.page.meta_keywords') }}"
+                                            />
+                                            <x-admin::forms.actions
+                                                    :back-url="route('service-pages.index')"
+                                                    show-reset
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <strong class="italic">{{ __('site.service-pages.cost') }}</strong>
-                        </div>
-                        <div class="card-body">
+                        <div class="tab-pane" id="settings" role="tabpanel">
                             <div class="row">
-                                <div class="col-12">
-                                    <x-admin::forms.input
-                                            name="extra[program_costs]"
-                                            label="{{ __('site.service-pages.program_costs') }}"
-                                            placeholder="{{ __('site.service-pages.program_costs') }}"
-                                    />
-                                </div>
-                                <div class="col-12">
-                                    <x-admin::forms.input
-                                            name="extra[actual_costs]"
-                                            label="{{ __('site.service-pages.actual_costs') }}"
-                                            placeholder="{{ __('site.service-pages.actual_costs') }}"
-                                    />
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            {{ __('site.service-pages.more') }}
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="repeater-custom-show-hide repeater">
+                                                <div data-repeater-list="more">
+                                                    <div data-repeater-item="">
+                                                        <div class="row">
+                                                            <div class="col-lg-10">
+                                                                <div class="row">
+                                                                    <div class="col-4">
+                                                                        <x-admin::forms.single_file
+                                                                                name="more[image_1][]"
+                                                                                label="{{ __('site.page.avatar') }} 1"
+                                                                                accept="image/jpeg,image/png,image/webp"
+                                                                        />
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <x-admin::forms.single_file
+                                                                                name="more[image_2][]"
+                                                                                label="{{ __('site.page.avatar') }} 2"
+                                                                                accept="image/jpeg,image/png,image/webp"
+                                                                        />
+                                                                    </div>
+                                                                    <div class="col-4">
+                                                                        <x-admin::forms.single_file
+                                                                                name="more[image_3][]"
+                                                                                label="{{ __('site.page.avatar') }} 3"
+                                                                                accept="image/jpeg,image/png,image/webp"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                                <x-admin::forms.textarea
+                                                                        name="more[content][]"
+                                                                        label="{{ __('site.service-pages.more_content') }}"
+                                                                        placeholder="{{ __('site.service-pages.more_content') }}"
+                                                                        rows="5"
+                                                                        ckeditor
+                                                                />
+                                                            </div>
+                                                            <div class="col-lg-2">
+                                                                <span data-repeater-delete="" class="btn btn-gradient-danger w-100">
+                                                                    <span class="far fa-trash-alt mr-1"></span> {{ __('site.widget.btn_delete') }}
+                                                                </span>
+                                                                <button type="button"
+                                                                        class="btn btn-gradient-secondary btn-move-up w-100 mt-3"
+                                                                        title="{{ __('site.widget.move_up') }}">
+                                                                    <i class="fas fa-arrow-up"></i> {{ __('site.widget.up') }}
+                                                                </button>
+                                                                <button type="button"
+                                                                        class="btn btn-gradient-primary btn-move-down w-100 mt-3"
+                                                                        title="{{ __('site.widget.move_down') }}">
+                                                                    <i class="fas fa-arrow-down"></i> {{ __('site.widget.down') }}
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mb-0">
+                                                    <div class="col-sm-12 text-right">
+                                                        <span data-repeater-create="" class="btn btn-outline-secondary btn-md">
+                                                            <span class="fa fa-plus"></span> {{ __('site.widget.add_row') }}
+                                                        </span>
+                                                    </div><!--end col-->
+                                                </div><!--end row-->
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            {{ __('site.page.seo') }} | {{ __('site.page.seo_config') }}
-                        </div>
-                        <div class="card-body">
-                            <x-admin::forms.input
-                                    name="meta_title"
-                                    label="{{ __('site.page.meta_title') }}"
-                                    placeholder="{{ __('site.page.meta_title') }}"
-                                    maxlength="60"
-                            />
-                            <x-admin::forms.textarea
-                                    name="meta_description"
-                                    label="{{ __('site.page.meta_description') }}"
-                                    placeholder="{{ __('site.page.meta_description') }}"
-                                    rows="5"
-                                    maxlength="150"
-                            />
-                            <x-admin::forms.tagsinput
-                                    name="meta_keywords"
-                                    label="{{ __('site.page.meta_keywords') }}"
-                                    placeholder="{{ __('site.page.meta_keywords') }}"
-                            />
-                            <x-admin::forms.actions
-                                    :back-url="route('service-pages.index')"
-                                    show-reset
-                            />
                         </div>
                     </div>
                 </div>
@@ -276,6 +389,7 @@
 @push('scripts')
     <!-- Plugins js -->
     <script src="{{ asset('administrator/phoenix/plugins/moment/moment.js') }}"></script>
+    <script src="{{ asset('administrator/phoenix/plugins/daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('administrator/phoenix/plugins/select2/select2.min.js') }}"></script>
     <script src="{{ asset('administrator/phoenix/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js') }}"></script>
     <script src="{{ asset('administrator/phoenix/plugins/timepicker/bootstrap-material-datetimepicker.js') }}"></script>
@@ -414,6 +528,18 @@
                     });
                 });
             }
+
+            $('input[name="extra[timing]"]').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                minYear: 2019,
+                maxYear: parseInt(moment().format('YYYY'),10),
+                startDate: moment(),
+                minDate: moment('01/01/2019', 'DD/MM/YYYY'),
+                locale: {
+                    format: 'DD/MM/YYYY'
+                }
+            });
 
             $(document).on(
                 'click',
